@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home Page</title>
+</head>
+<body>
+    <button onclick="create();">Create</button>
+    <button onclick="search();">Search</button>
+    <button onclick="update();">Update</button>
+    <button onclick="del();">Delete</button>
+    <div class="database">
+        <% for(var i=0; i < users.length; i++ ){ %>
+            <div>User <%=i%></div>
+            <div><%users[i].name%></div>
+            <div>id :<%= users[i]._id %></div>
+            <div>name :<%= users[i].name %></div>
+            <div>email :<%= users[i].email %></div>
+        <% } %>
+    </div>
+
+    <script>
+        var httpRequest = new XMLHttpRequest();
+        function create(){
+            let name = document.createElement("input");
+            name.setAttribute("type","name");
+            let email = document.createElement("input");
+            email.setAttribute("type","email");
+            let submitButton0 = document.createElement("button");
+            submitButton.innerText = "Submit create";
+            submitButton.setAttribute("type","submit");
+        
+            document.body.appendChild(name);
+            document.body.appendChild(email);
+            document.body.appendChild(submitButton);
+            
+            submitButton.addEventListener("click", submitCreate);
+        }
+        function submitCreate(){
+            let sendData = { 
+                 name: document.getElementsByTagName("input")[0].value, 
+                email: document.getElementsByTagName("input")[1].value
+            }; 
+            httpRequest.open("POST","/add");
+            httpRequest.setRequestHeader("Content-Type",'application/json');
+            httpRequest.send(JSON.stringify(sendData));
+        }
+        
+        function search(){
+            let nameTag= document.createElement("input");
+            nametag.setAttribute("type","name");
+            nametag.setAttribute("id","namesearch");
+            let submitButton1 = document.createElement("button");
+            submitButton.innerText = "Submit search";
+            submitButton.setAttribute("type","submit");
+
+            document.body.appendChild(name);
+            document.body.appendChild(submitButton);
+
+            submitButton.addEventListener("click", submitSearch);
+        }
+        function submitSearch(){
+            httpRequest.open("GET",`/search/${document.getElementById("namesearch").innerHTML}`);
+        }
+        function update(){
+            let nameTag= document.createElement("input");
+            nametag.setAttribute("type","name");
+            nametag.setAttribute("id","nameupdate");
+            let submitButton1 = document.createElement("button");
+            submitButton1.innerText = "Submit update";
+            submitButton1.setAttribute("type","submit");
+
+            document.body.appendChild(name);
+            document.body.appendChild(submitButton1);
+
+            submitButton1.addEventListener("click", submitUpdate);
+        }
+        function submitUpdate(){
+            httpRequest.open("PUT",`/update/${document.getElementById("nameupdate").innerHTML}`);
+        }
+        function del(){
+            let nameTag= document.createElement("input");
+            nametag.setAttribute("type","name");
+            nametag.setAttribute("id","namedelete");
+            let submitButton2 = document.createElement("button");
+            submitButton2.innerText = "Submit delete";
+            submitButton2.setAttribute("type","submit");
+
+            document.body.appendChild(name);
+            document.body.appendChild(submitButton2);
+
+            submitButton2.addEventListener("click", submitDelete);
+    }
+        function submitDelete(){
+            httpRequest.open("DELETE",`/delete/${document.getElementById("namedelete").innerHTML}`);
+        }
+
+    </script>
+</body>
+</html>
